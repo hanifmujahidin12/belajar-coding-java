@@ -3,7 +3,18 @@ import java.util.ArrayList;
 
 class Employee{
     private String name;
-    private int salary;
+    private float salary;
+
+    private int totalWork = 0;
+
+//    public Employee (String nama, int salary) {
+//        this.name=nama;
+//        this.salary=salary;
+//    }
+//
+//    public Employee () {
+//
+//    }
 
     public void setName(String name){
         this.name = name;
@@ -13,18 +24,26 @@ class Employee{
         this.salary = salary;
     }
     
-    public int getSalary(){
+    public float getSalary(){
         return this.salary;
     }
     
     public void getInfo(){
         System.out.println(name + " has salary Rp" + salary);
     }
+
+    public int getTotalWork() {
+        return totalWork;
+    }
+
+    public void setTotalWork(int totalWork) {
+        this.totalWork = totalWork;
+    }
 }
 
 class Company{
     private String name;
-    private int companyCash = 100000000;
+    private int companyCash = 0;
     private ArrayList<Employee> arrEmployee = new ArrayList<Employee>();
     private int month = 0;
 
@@ -35,13 +54,14 @@ class Company{
     //tambahkan 1 object employee ke dalam attribute array employee
     public void addArrEmployee(Employee objEmployee){
         //Complete code here
+        arrEmployee.add(objEmployee);
 
     }
 
     //menambahkan bulan berjalan sesuai parameter yang dimasukkan
     public void addMonth(int month){
-        this.month += month;
-        this.calculateCompanyCash();
+        this.month+= month;
+        this.calculateCompanyCash(month);
     }
 
     /*
@@ -50,14 +70,19 @@ class Company{
     */
     public void getCompanyStatus(){
         //Complete code here
-        System.out.println("print disini");
+        System.out.println(name + " sudah berdiri selama "+ month +" bulan memiliki "+ arrEmployee.size() +" orang karyawan dengan Cash sebesar Rp"+companyCash);
     }
 
     //menghitung ulang cash yang dimiliki perusahaan sesuai dengan bulan berjalan saat ini
     //Perusahaan diharuskan membayar gaji bulanan semua karyawan sesuai dengan jumlah bulan berjalan
-    public void calculateCompanyCash(){
+    public void calculateCompanyCash(int month){
         //Complete code here
-        
+        companyCash = 0;
+        for (Employee employee : arrEmployee) {
+            employee.setTotalWork(employee.getTotalWork()+month);
+            companyCash += employee.getSalary()* employee.getTotalWork();
+
+        }
     }
 }
 
@@ -74,7 +99,7 @@ public class OopStatusCompany {
         
         //Membuat perusahaan baru
         Company objCompany = new Company();
-        objCompany.setName("PT Coding.ID");
+        objCompany.setName("PT CodingAja");
         
         //print status perusahaan
         objCompany.getCompanyStatus();
